@@ -4,8 +4,7 @@ const data = require('../data.js')
 
 const TMDB_API_KEY = process.env.TMDB_API_KEY // Leemos la clave de TMDB desde el archivo .env
 
-// GET /api/movies/search?q=:query
-// Busca películas en TMDB y devuelve los resultados.
+// GET /api/movies/search?q=:query (busca películas en TMDB y devuelve los resultados)
 router.get('/search', async (request, response) => {
   const query = request.query.q
   
@@ -26,8 +25,7 @@ router.get('/search', async (request, response) => {
   }
 })
 
-// GET /api/movies/:tmdbId
-// Detalle de una película desde TMDB y lo combinamos con nuestras reseñas en memoria
+// GET /api/movies/:tmdbId (detalle de una película desde TMDB y lo combinamos con nuestras reseñas en memoria)
 router.get('/:tmdbId', async (request, response) => {
   const tmdbId = request.params.tmdbId
 
@@ -64,8 +62,7 @@ router.get('/:tmdbId', async (request, response) => {
   }
 })
 
-// POST /api/movies/:tmdbId/reviews
-// Agrega una reseña a una película validando los campos obligatorios
+// POST /api/movies/:tmdbId/reviews (agrega una reseña a una película validando los campos obligatorios)
 router.post('/:tmdbId/reviews', (request, response) => {
   const tmdbId = request.params.tmdbId
   const body = request.body
