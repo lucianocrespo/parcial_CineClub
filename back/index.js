@@ -5,8 +5,8 @@ const morgan = require('morgan')
 const data = require('./data.js')
 
 // Conectamos los routers
-const moviesRouter = require('./routes/movies')
-const reviewsRouter = require('./routes/reviews')
+const moviesRouter = require('./routes/movies.js')
+const reviewsRouter = require('./routes/reviews.js')
 
 const app = express()
 
