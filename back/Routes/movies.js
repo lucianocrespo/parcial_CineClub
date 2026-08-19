@@ -27,7 +27,7 @@ router.get('/search', async (request, response) => {
 })
 
 // GET /api/movies/:tmdbId
-// Detalle de una película desde TMDB + combinamos con nuestras reseñas en memoria
+// Detalle de una película desde TMDB y lo combinamos con nuestras reseñas en memoria
 router.get('/:tmdbId', async (request, response) => {
   const tmdbId = request.params.tmdbId
 
@@ -52,7 +52,7 @@ router.get('/:tmdbId', async (request, response) => {
       avgScore = sumaTotal / movieReviews.length
     }
 
-    // Armamos un objeto nuevo que junta la peli de TMDB, nuestras reseñas y el promedio
+    // Armamos un objeto nuevo que junta la pelicula de TMDB, nuestras reseñas y el promedio
     response.json({
       ...movieData,
       localReviews: movieReviews,
@@ -62,6 +62,39 @@ router.get('/:tmdbId', async (request, response) => {
   } catch (error) {
     response.status(500).json({ error: 'Error interno del servidor' })
   }
+})
+
+// POST /api/movies/:tmdbId/reviews
+// Agrega una reseña a una película validando los campos obligatorios
+router.post('/:tmdbId/reviews', (request, response) => {
+  const tmdbId = request.params.tmdbId
+  const body = request.body
+
+  // Validamos que se haya ingresado: author, score y comment.
+  if (!body.author || body.score === undefined || !body.comment) {
+    return response.status(400).json({ error: 'Faltan datos: author, score y comment son obligatorios' })
+  }
+
+  // Validamos que el score sea un número entre 1 y 5.
+  if (typeof body.score !== 'number' || body.score < 1 || body.score > 5) {
+    return response.status(400).json({ error: 'El score debe ser un número entre 1 y 5' })
+  }
+
+  // Creamos la reseña con un id único basado en Date.now()
+  const nuevaResena = {
+    id: Date.now().toString(),
+    tmdbId: tmdbId, 
+    author: body.author,
+    score: body.score,
+    comment: body.comment,
+    date: new Date().toISOString()
+  }
+
+  // Guardamos en nuestro array en memoria
+  data.reviews = data.reviews.concat(nuevaResena)
+  
+  // Respondemos con código 201 (que se creó) y la reseña armada
+  response.status(201).json(nuevaResena)
 })
 
 module.exports = router
