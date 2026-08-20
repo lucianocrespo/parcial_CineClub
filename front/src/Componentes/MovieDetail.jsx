@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import ReviewList from './ReviewList'
+import ReviewForm from './ReviewForm'
 
 const MovieDetail = ({ tmdbId }) => {
   const [movieData, setMovieData] = useState(null)
@@ -7,7 +8,6 @@ const MovieDetail = ({ tmdbId }) => {
   const [error, setError] = useState(null)
 
   useEffect(() => {
-    // Definimos la función adentro del useEffect
     const fetchMovieDetail = async () => {
       try {
         setIsLoading(true)
@@ -28,7 +28,37 @@ const MovieDetail = ({ tmdbId }) => {
     }
 
     fetchMovieDetail()
-  }, [tmdbId]) // El array de dependencias tiene tmdbId para que re-ejecute si cambia la pelicula
+  }, [tmdbId])
+
+  // Función para enviar la reseña a nuestro backend
+  const handleReviewSubmit = async (reviewData) => {
+    try {
+      const baseUrl = import.meta.env.VITE_API_URL
+      // Hacemos el POST
+      const response = await fetch(`${baseUrl}/movies/${tmdbId}/reviews`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(reviewData)
+      })
+
+      if (!response.ok) {
+        throw new Error('Error al guardar la reseña')
+      }
+
+      const savedReview = await response.json()
+
+      // La nueva reseña aparece sin recargar la página
+      setMovieData({
+        ...movieData,
+        localReviews: movieData.localReviews.concat(savedReview)
+      })
+
+    } catch (err) {
+      alert('Hubo un error al enviar la reseña. Verificá que el servidor esté encendido.')
+    }
+  }
 
   if (isLoading) return <p>Cargando detalles de la película...</p>
   if (error) return <p style={{ color: 'red' }}>{error}</p>
@@ -57,6 +87,8 @@ const MovieDetail = ({ tmdbId }) => {
       <h3>Reseñas</h3>
       <ReviewList reviews={movieData.localReviews} />
       
+      {/* Integramos el formulario pasándole la función por props */}
+      <ReviewForm onSubmitReview={handleReviewSubmit} />
     </div>
   )
 }
