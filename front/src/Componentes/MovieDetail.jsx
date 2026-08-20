@@ -65,13 +65,13 @@ const MovieDetail = ({ tmdbId }) => {
   if (!movieData) return null
 
   return (
-    <div>
-      <div style={{ display: 'flex', gap: '20px', marginBottom: '20px' }}>
+    <div className="movie-detail">
+      <div className="movie-info">
         {movieData.poster_path && (
           <img 
             src={`https://image.tmdb.org/t/p/w300${movieData.poster_path}`} 
             alt={movieData.title} 
-            style={{ borderRadius: '8px', maxHeight: '400px' }}
+            className="movie-poster"
           />
         )}
         <div>
@@ -87,7 +87,6 @@ const MovieDetail = ({ tmdbId }) => {
       <h3>Reseñas</h3>
       <ReviewList reviews={movieData.localReviews} />
       
-      {/* Integramos el formulario pasándole la función por props */}
       <ReviewForm onSubmitReview={handleReviewSubmit} />
     </div>
   )

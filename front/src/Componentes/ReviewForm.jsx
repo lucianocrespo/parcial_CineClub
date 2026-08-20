@@ -32,21 +32,22 @@ const ReviewForm = ({ onSubmitReview }) => {
   }
 
   return (
-    <div style={{ marginTop: '30px', padding: '20px', border: '1px solid #ccc', borderRadius: '8px', maxWidth: '500px' }}>
-      <h3 style={{ marginTop: 0 }}>Agregar una reseña</h3>
-      {errorMsg && <p style={{ color: 'red', fontWeight: 'bold' }}>{errorMsg}</p>}
+    <div className="review-form">
+      <h3>Agregar una reseña</h3>
       
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-        <div>
+      {errorMsg && <p className="error-msg">{errorMsg}</p>}
+      
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
           <label>Nombre:</label>
           <input 
             type="text" 
             value={author} 
-            onChange={(e) => setAuthor(e.target.value)}
+            onChange={(e) => setAuthor(e.target.value)} 
           />
         </div>
         
-        <div>
+        <div className="form-group">
           <label>Puntaje (1 al 5):</label>
           <input 
             type="number" 
@@ -57,16 +58,16 @@ const ReviewForm = ({ onSubmitReview }) => {
           />
         </div>
         
-        <div>
+        <div className="form-group">
           <label>Comentario:</label>
           <textarea 
             rows="4" 
             value={comment} 
-            onChange={(e) => setComment(e.target.value)}
+            onChange={(e) => setComment(e.target.value)} 
           />
         </div>
         
-        <button type="submit">
+        <button type="submit" className="btn-dark">
           Enviar Reseña
         </button>
       </form>

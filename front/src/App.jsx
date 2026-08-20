@@ -41,11 +41,12 @@ const App = () => {
   }
 
   return (
-    <div style={{ fontFamily: 'sans-serif', padding: '20px' }}>
-      <header style={{ marginBottom: '20px', borderBottom: '1px solid #ccc', paddingBottom: '10px' }}>
-        <h1 style={{ display: 'inline-block', marginRight: '20px' }}>CineClub</h1>
+    <div className="app-container">
+      <header className="app-header">
+        <h1>CineClub</h1>
+        
         {currentView === 'detail' && (
-          <button onClick={() => setCurrentView('search')}>
+          <button onClick={() => setCurrentView('search')} className="btn-primary">
             Volver al Buscador
           </button>
         )}
@@ -53,14 +54,12 @@ const App = () => {
 
       <main>
         {currentView === 'search' && (
-          <div>
+          <div className="search-container">
             <SearchBar onSearch={handleSearch} />
-
-            {/* Renderizado condicional de los estados */}
-            {isLoading && <p>Cargando resultados...</p>}
-            {errorMessage && <p style={{ color: 'red', fontWeight: 'bold' }}>{errorMessage}</p>}
             
-            {/* Si no está cargando y no hay error, mostramos la grilla */}
+            {isLoading && <p>Cargando resultados...</p>}
+            {errorMessage && <p className="error-msg">{errorMessage}</p>}
+            
             {!isLoading && !errorMessage && (
               <MovieGrid movies={movies} onMovieSelect={goToDetail} />
             )}

@@ -6,7 +6,7 @@ const MovieGrid = ({ movies, onMovieSelect }) => {
   }
 
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
+    <div className="movie-grid">
       {movies.map(movie => (
         <MovieCard
           key={movie.id}

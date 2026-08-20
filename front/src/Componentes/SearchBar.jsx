@@ -13,15 +13,15 @@ const SearchBar = ({ onSearch }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
+    <form onSubmit={handleSubmit} className="search-form">
       <input
         type="text"
         placeholder="Buscar película..."
         value={inputValue}
         onChange={(event) => setInputValue(event.target.value)}
-        style={{ padding: '8px', width: '250px', marginRight: '10px' }}
+        className="input-text"
       />
-      <button type="submit" style={{ padding: '8px 15px' }}>Buscar</button>
+      <button type="submit" className="btn-primary">Buscar</button>
     </form>
   )
 }

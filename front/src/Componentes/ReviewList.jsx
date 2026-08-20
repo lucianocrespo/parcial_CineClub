@@ -1,17 +1,17 @@
 const ReviewList = ({ reviews }) => {
   if (!reviews || reviews.length === 0) {
-    return <p>No hay reseñas por el momento, pero podes dejar la tuya!</p>
+    return <p className="no-reviews-msg">No hay reseñas por el momento, pero podes dejar la tuya!</p>
   }
 
   return (
-    <div style={{ marginTop: '20px' }}>
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+    <div>
+      <ul className="review-list">
         {reviews.map(review => (
-          <li key={review.id} style={{ border: '1px solid #ddd', margin: '10px 0', padding: '10px', borderRadius: '5px' }}>
-            <p style={{ margin: '0 0 10px 0' }}>
+          <li key={review.id} className="review-item">
+            <p>
               <strong>{review.author}</strong> - {review.score} ⭐
             </p>
-            <p style={{ margin: 0 }}>{review.comment}</p>
+            <p>{review.comment}</p>
           </li>
         ))}
       </ul>
