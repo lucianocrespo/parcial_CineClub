@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import SearchBar from './Componentes/SearchBar'
 import MovieGrid from './Componentes/MovieGrid'
+import MovieDetail from './Componentes/MovieDetail'
 
 const App = () => {
   const [currentView, setCurrentView] = useState('search')
@@ -67,9 +68,7 @@ const App = () => {
         )}
 
         {currentView === 'detail' && (
-          <div>
-            <p>Vista de Detalle de la película {selectedMovieId}</p>
-          </div>
+          <MovieDetail tmdbId={selectedMovieId} />
         )}
       </main>
     </div>
